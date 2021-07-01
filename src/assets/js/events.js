@@ -38,10 +38,10 @@ window.addEventListener('load', ()=>{
     document.getElementById('create-room').addEventListener('click', (e)=>{
         e.preventDefault();
 
-        let roomName = document.querySelector('#room-name').value;
+
         let yourName = document.querySelector('#your-name').value;
 
-        if(roomName && yourName){
+        if(yourName){
             //remove error message, if any
             document.querySelector('#err-msg').innerHTML = "";
 
@@ -49,11 +49,11 @@ window.addEventListener('load', ()=>{
             sessionStorage.setItem('username', yourName);
 
             //create room link
-            let roomLink = `${location.origin}?room=${roomName.trim().replace(' ', '_')}_${helpers.generateRandomString()}`;
+            let roomLink = `${location.origin}?room=${yourName.trim().replace(' ', '_')}_${helpers.generateRandomString()}`;
 
             //show message with link to room
-            document.querySelector('#room-created').innerHTML = `Room successfully created. Click <a href='${roomLink}'>here</a> to enter room.
-                Share the room link with your partners.`;
+            document.querySelector('#room-created').innerHTML = `Click <a href='${roomLink}'>here</a> to join the meeting.
+                Share the link with your partners.`;
 
             //empty the values
             document.querySelector('#room-name').value = '';

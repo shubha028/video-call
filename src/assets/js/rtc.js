@@ -1,6 +1,6 @@
 /**
- * @author Amir Sanni <amirsanni@gmail.com>
- * @date 6th January, 2020
+ * @author shubhasharma<shubhasharma0208@gmail.com>
+ * @date 2021
  */
 import h from './helpers.js';
 
@@ -33,7 +33,7 @@ window.addEventListener('load', ()=>{
         socket.on('connect', ()=>{
             //set socketId
             socketId = socket.io.engine.id;
-        
+
 
             socket.emit('subscribe', {
                 room: room,
@@ -76,7 +76,7 @@ window.addEventListener('load', ()=>{
                         });
 
                         let answer = await pc[data.sender].createAnswer();
-                        
+
                         await pc[data.sender].setLocalDescription(answer);
 
                         socket.emit('sdp', {description:pc[data.sender].localDescription, to:data.sender, sender:socketId});
@@ -116,7 +116,7 @@ window.addEventListener('load', ()=>{
 
         function init(createOffer, partnerName){
             pc[partnerName] = new RTCPeerConnection(h.getIceServer());
-            
+
             h.getUserMedia().then((stream)=>{
                 //save my stream
                 myStream = stream;
@@ -136,7 +136,7 @@ window.addEventListener('load', ()=>{
             if(createOffer){
                 pc[partnerName].onnegotiationneeded = async ()=>{
                     let offer = await pc[partnerName].createOffer();
-                    
+
                     await pc[partnerName].setLocalDescription(offer);
 
                     socket.emit('sdp', {description:pc[partnerName].localDescription, to:partnerName, sender:socketId});
@@ -162,22 +162,22 @@ window.addEventListener('load', ()=>{
                 else{
                     //video elem
                     let newVid = document.createElement('video');
-                    newVid.id = `${partnerName}-video`;            
+                    newVid.id = `${partnerName}-video`;
                     newVid.srcObject = str;
                     newVid.autoplay = true;
                     newVid.className = 'remote-video';
-                    
+
                     //create a new div for card
                     let cardDiv = document.createElement('div');
                     cardDiv.className = 'card mb-3';
                     cardDiv.appendChild(newVid);
-                    
+
                     //create a new div for everything
                     let div = document.createElement('div');
                     div.className = 'col-sm-12 col-md-6';
                     div.id = partnerName;
                     div.appendChild(cardDiv);
-                    
+
                     //put div in videos elem
                     document.getElementById('videos').appendChild(div);
                 }
@@ -191,7 +191,7 @@ window.addEventListener('load', ()=>{
                     case 'failed':
                         h.closeVideo(partnerName);
                         break;
-                        
+
                     case 'closed':
                         h.closeVideo(partnerName);
                         break;
@@ -214,7 +214,7 @@ window.addEventListener('load', ()=>{
         document.getElementById('chat-input').addEventListener('keypress', (e)=>{
             if(e.which === 13 && (e.target.value.trim())){
                 e.preventDefault();
-                
+
                 sendMsg(e.target.value);
 
                 setTimeout(()=>{
@@ -232,6 +232,7 @@ window.addEventListener('load', ()=>{
             //toggle video icon
             e.srcElement.classList.toggle('fa-video');
             e.srcElement.classList.toggle('fa-video-slash');
+            this.myStream.getVideoTracks()[0].stop();
         });
 
 
@@ -246,3 +247,95 @@ window.addEventListener('load', ()=>{
         });
     }
 });
+(function () {
+    "use strict";
+
+    const MESSAGE_TYPE = {
+      SDP: 'SDP',
+      CANDIDATE: 'CANDIDATE',
+    }
+
+    let code;
+    let peerConnection;
+    let signaling;
+    const senders = [];
+    let userMediaStream;
+    let displayMediaStream;
+
+
+    const addMessageHandler = () => {
+      signaling.onmessage = async (message) => {
+        const data = JSON.parse(message.data);
+
+        if (!data) {
+          return;
+        }
+
+        const { message_type, content } = data;
+        try {
+          if (message_type === MESSAGE_TYPE.CANDIDATE && content) {
+            await peerConnection.addIceCandidate(content);
+          } else if (message_type === MESSAGE_TYPE.SDP) {
+            if (content.type === 'offer') {
+              await peerConnection.setRemoteDescription(content);
+              const answer = await peerConnection.createAnswer();
+              await peerConnection.setLocalDescription(answer);
+              sendMessage({
+                message_type: MESSAGE_TYPE.SDP,
+                content: answer,
+              });
+            } else if (content.type === 'answer') {
+              await peerConnection.setRemoteDescription(content);
+            } else {
+              console.log('Unsupported SDP type.');
+            }
+          }
+        } catch (err) {
+          console.error(err);
+        }
+      };
+    };
+
+    const sendMessage = (message) => {
+      if (code) {
+        signaling.send(JSON.stringify({
+          ...message,
+          code,
+        }));
+      }
+    };
+
+    const createAndSendOffer = async () => {
+      const offer = await peerConnection.createOffer();
+      await peerConnection.setLocalDescription(offer);
+
+      sendMessage({
+        message_type: MESSAGE_TYPE.SDP,
+        content: offer,
+      });
+    };
+
+
+
+    document.getElementById('share-button').addEventListener('click', async () => {
+      if (!displayMediaStream) {
+        displayMediaStream = await navigator.mediaDevices.getDisplayMedia();
+      }
+      senders.find(sender => sender.track.kind === 'video').replaceTrack(displayMediaStream.getTracks()[0]);
+
+      //show what you are showing in your "self-view" video.
+      document.getElementById('self-view').srcObject = displayMediaStream;
+
+      //hide the share button and display the "stop-sharing" one
+      document.getElementById('share-button').style.display = 'none';
+      document.getElementById('stop-share-button').style.display = 'inline';
+    });
+
+    document.getElementById('stop-share-button').addEventListener('click', async (event) => {
+      senders.find(sender => sender.track.kind === 'video')
+        .replaceTrack(userMediaStream.getTracks().find(track => track.kind === 'video'));
+      document.getElementById('self-view').srcObject = userMediaStream;
+      document.getElementById('share-button').style.display = 'inline';
+      document.getElementById('stop-share-button').style.display = 'none';
+    });
+  })();

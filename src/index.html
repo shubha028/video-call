@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
         <link rel='stylesheet' href='assets/css/app.css' type="text/css">
-
+        <link  href='hi.html' type="html">
         <script src='/socket.io/socket.io.js'></script>
         <script type="module" src='assets/js/rtc.js'></script>
         <script type="module" src='assets/js/events.js'></script>
@@ -19,21 +19,26 @@
 
     <body>
 
-        <nav class="navbar fixed-top bg-info rounded-0 d-print-none">
+        <nav class="navbar fixed-top backcolor rounded-0 d-print-none">
             <div class="text-white">MS Teams Clone</div>
-            <a href="/auth">Login!</a>
+            <a  class="text-white"  id="login" href="http://localhost:3000/login">Your Account!</a>
+
             <div class="pull-right room-comm" hidden>
-                <button class="btn btn-sm rounded-0 btn-no-effect" id='toggle-video'>
+                <button class="btn btn-sm rounded-0 btn-no-effect" autoplay="true" id='toggle-video'>
                     <i class="fa fa-video text-white"></i>
                 </button>
 
-                <button class="btn btn-sm rounded-0 btn-no-effect" id='toggle-mute'>
+                <button class="btn btn-sm rounded-0 btn-no-effect"  autoplay="true" id='toggle-mute'>
                     <i class="fa fa-volume-up text-white"></i>
                 </button>
 
                 <button class="btn btn-sm text-white pull-right d-md-none btn-no-effect" id='toggle-chat-pane'>
                     <i class="fa fa-comment"></i> <span class="badge badge-danger very-small font-weight-lighter" id='new-chat-notification' hidden>New</span>
                 </button>
+
+                  <button class="view-button" id="share-button"><i id="share-button-icon" class="fas fa-eye"></i></button>
+                  <button class="view-button" style="display: none" id="stop-share-button"><i id="stop-share-button-icon" class="fas fa-eye-slash"></i></button>
+
 
                 <button class="btn btn-sm rounded-0 btn-no-effect text-white">
                     <a href="/" class="text-white text-decoration-none">Leave Room</a>
@@ -50,8 +55,75 @@
 
 
         <div class="container-fluid" id='room-create' hidden>
-            <div class="row">
-                <div class="col-12 h2 mt-5 text-center">Create Room</div>
+            <section id="hero" class="d-flex align-items-center">
+
+                <div class="container">
+                  <div class="row gy-4">
+                    <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center">
+                      <h1>Bettter digital experience with Ninestars</h1>
+                      <h2>We are team of talented designers making websites with Bootstrap</h2>
+                      <div>
+                        <a href="#meeting" class="btn-get-started scrollto">Get Started</a>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 order-1 order-lg-2 hero-img">
+                      <img src="assets/Capture.PNG" class="img-fluid animated" alt="">
+                    </div>
+                  </div>
+                </div>
+
+              </section><!-- End Hero -->
+
+
+                <!-- ======= Services Section ======= -->
+                <section id="services" class="services section-bg">
+                  <div class="container" data-aos="fade-up">
+
+                    <div class="section-title">
+                      <h2>Services</h2>
+                      <p>Check out the great services we offer</p>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+                        <div class="icon-box">
+                          <div class="icon"><i class="bx bxl-dribbble"></i></div>
+                          <h4 class="title"><a href="">Lorem Ipsum</a></h4>
+                          <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate</p>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="200">
+                        <div class="icon-box">
+                          <div class="icon"><i class="bx bx-file"></i></div>
+                          <h4 class="title"><a href="">Sed ut perspiciatis</a></h4>
+                          <p class="description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla</p>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="300">
+                        <div class="icon-box">
+                          <div class="icon"><i class="bx bx-tachometer"></i></div>
+                          <h4 class="title"><a href="">Magni Dolores</a></h4>
+                          <p class="description">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim</p>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="400">
+                        <div class="icon-box">
+                          <div class="icon"><i class="bx bx-world"></i></div>
+                          <h4 class="title"><a href="">Nemo Enim</a></h4>
+                          <p class="description">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum</p>
+                        </div>
+                      </div>
+
+                    </div>
+
+                  </div>
+                </section>
+
+                    <div class="row" id="meeting">
+                <div class="col-12 h2 mt-5 text-center">Join Meeting</div>
             </div>
 
             <div class="row mt-2">
@@ -59,10 +131,7 @@
                     <span class="form-text small text-danger" id='err-msg'></span>
                 </div>
 
-                <div class="col-12 col-md-4 offset-md-4 mb-3">
-                    <label for="room-name">Room Name</label>
-                    <input type="text" id='room-name' class="form-control rounded-0" placeholder="Enter Room Name">
-                </div>
+
 
                 <div class="col-12 col-md-4 offset-md-4 mb-3">
                     <label for="your-name">Your Name</label>
@@ -70,12 +139,72 @@
                 </div>
 
                 <div class="col-12 col-md-4 offset-md-4 mb-3">
-                    <button id='create-room' class="btn btn-block rounded-0 btn-info">Create Room</button>
+                    <button id='create-room' class="btn btn-block rounded-0 backcolor">Start</button>
                 </div>
 
                 <div class="col-12 col-md-4 offset-md-4 mb-3" id='room-created'></div>
             </div>
+            <!-- ======= Footer ======= -->
+ <footer id="footer">
+
+
+  <div class="footer-top">
+    <div class="container">
+      <div class="row">
+
+        <div class="col-lg-3 col-md-6 footer-contact">
+          <h3>video-call app</h3>
+          <p>
+            A108 Adam Street <br>
+            New York, NY 535022<br>
+            United States <br><br>
+            <strong>Phone:</strong> +1 5589 55488 55<br>
+            <strong>Email:</strong> info@example.com<br>
+          </p>
         </div>
+
+        <div class="col-lg-3 col-md-6 footer-links">
+          <h4>Useful Links</h4>
+          <ul>
+            <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-3 col-md-6 footer-links">
+          <h4>Our Services</h4>
+          <ul>
+            <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-3 col-md-6 footer-links">
+          <h4>Our Social Networks</h4>
+          <p>Cras fermentum odio eu feugiat lide par naso tierra videa magna derita valies</p>
+          <div class="social-links mt-3">
+            <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+            <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+            <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+            <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+            <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</footer><!-- End Footer -->
+        </div>
+
+
 
 
 
@@ -95,7 +224,7 @@
                 </div>
 
                 <div class="col-12 col-md-4 offset-md-4 mb-3">
-                    <button id='enter-room' class="btn btn-block rounded-0 btn-info">Enter Room</button>
+                    <button id='enter-room' class="btn btn-block rounded-0 chat-bg">Enter Room</button>
                 </div>
             </div>
         </div>
@@ -112,22 +241,23 @@
                     <div class="row" id='videos'></div>
                 </div>
 
-                <div class="col-md-3 chat-col d-print-none mb-2 bg-info" id='chat-pane'>
+                <div class="col-md-3 chat-col d-print-none mb-2 chat-bg" id='chat-pane'>
                     <div class="row">
                         <div class="col-12 text-center h2 mb-3">CHAT</div>
                     </div>
 
-                    <div id='chat-messages'></div>
-
-                    <div class="row">
+                    <div id='chat-messages'>
+                      <div class="row">
                         <textarea id='chat-input' class="form-control rounded-0 chat-box border-info" rows='3' placeholder="Type here..."></textarea>
-                    </div>
+
+                      </div>
                 </div>
             </div>
         </div>
     </body>
     <script>
-        const toggle = document.getElementById('toggle');
+
+   const toggle = document.getElementById('toggle');
 const body = document.body;
 
 toggle.addEventListener('input', (e) => {
@@ -140,4 +270,67 @@ toggle.addEventListener('input', (e) => {
   }
 });
     </script>
+<script type="text/javascript">
+  var config = {
+    apiKey: "AIzaSyBFPl6yV7qOrEQvT0YAAbMYRkmsVsWRikI",
+   authDomain: "video-call-website-6ec44.firebaseapp.com",
+   projectId: "video-call-website-6ec44",
+   storageBucket: "video-call-website-6ec44.appspot.com",
+   messagingSenderId: "818899933687",
+   appId: "1:818899933687:web:9243d920399283d78ff6f2"
+   };
+   firebase.initializeApp(config);
+
+   const auth = firebase.auth();
+
+
+
+
+
+   function signOut(){
+    alert("Signed Out");
+       auth.signOut();
+       alert("Signed Out");
+       firebase.auth().signOut().then(() => {
+  // Sign-out successful.
+}).catch((error) => {
+  // An error happened.
+});
+
+   }
+   function signIn(){
+
+var email = document.getElementById("email");
+document.getElementById("login").innerHTML= "welcome";
+
+var password = document.getElementById("password");
+
+const promise = auth.signInWithEmailAndPassword(email.value, password.value);
+promise.catch(e => alert(e.message));
+auth.onAuthStateChanged(function(user){
+
+if(user){
+
+var email = user.email;
+if(email!=""){
+window.location.href="http://localhost:3000/";
+
+//Take user to a different or home page
+}
+//is signed in
+
+}else{
+
+alert("No Active User");
+//no user is signed in
+}
+
+
+
+});
+   }
+
+
+
+</script>
 </html>

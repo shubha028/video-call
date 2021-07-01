@@ -1,15 +1,102 @@
-<!DOCTYPE html>
 <html>
-    <head>
-        <title>Multi-User Video Call</title>
-
-        <meta content="width=device-width, initial-scale=1" name="viewport" />
-
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-        <link rel='stylesheet' href='assets/css/app.css' type="text/css">
+<head>
+  <title>Login Page</title>
+  <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/css/loginpage.css" />
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+<script src="./assets/js/login.js"></script>
 </head>
 <body>
-    <p>hiiiiiiiiiiiiiiiii</p>
+
+  <div id="login_div" class="main-div">
+    <h3>Login to MS Teams clone</h3>
+    <input type="email" placeholder="Email..." id="email" value=" " />
+    <input type="password" placeholder="Password..." id="password" value=" " />
+<button onclick="signUp()" id="signup">signup</button>
+<button onclick="signIn()" id="signin">signin</button>
+    <button onclick="signOut()" id="login">signout</button>
+  </div>
+
+
+
 </body>
+<script type="text/javascript">
+   var config = {
+     apiKey: "AIzaSyBFPl6yV7qOrEQvT0YAAbMYRkmsVsWRikI",
+    authDomain: "video-call-website-6ec44.firebaseapp.com",
+    projectId: "video-call-website-6ec44",
+    storageBucket: "video-call-website-6ec44.appspot.com",
+    messagingSenderId: "818899933687",
+    appId: "1:818899933687:web:9243d920399283d78ff6f2"
+    };
+    firebase.initializeApp(config);
+
+    const auth = firebase.auth();
+
+
+    function signUp(){
+
+        var email = document.getElementById("email");
+        var password = document.getElementById("password");
+
+        const promise = auth.createUserWithEmailAndPassword(email.value, password.value);
+        promise.catch(e => alert(e.message));
+
+        alert("Signed Up");
+    }
+
+
+
+    function signIn(){
+
+        var email = document.getElementById("email");
+        var password = document.getElementById("password");
+
+        const promise = auth.signInWithEmailAndPassword(email.value, password.value);
+        promise.catch(e => alert(e.message));
+        auth.onAuthStateChanged(function(user){
+
+if(user){
+
+    var email = user.email;
+    alert("Active User " + email);
+    if(email!=""){
+    window.location.href="http://localhost:3000/";
+    //Take user to a different or home page
+
+}
+    //is signed in
+
+}else{
+
+    alert("No Active User");
+    //no user is signed in
+}
+
+
+
+});
+
+
+
+
+    }
+
+
+    function signOut(){
+
+        auth.signOut();
+
+        alert("No Active User");
+    }
+
+
+
+
+
+</script>
 </html>
+
+
+
