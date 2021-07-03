@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Merienda&display=swap');
 .chat-col{
     right: 0;
     bottom: 0;
@@ -1091,7 +1092,7 @@ body{
 
   #footer .footer-top .footer-links ul i {
     padding-right: 2px;
-    color: #f39e7a;
+    color: #3b7ffc;
     font-size: 18px;
     line-height: 1;
   }
@@ -1115,13 +1116,13 @@ body{
 
   #footer .footer-top .footer-links ul a:hover {
     text-decoration: none;
-    color: #eb5d1e;
+    color: #4ebeeb;
   }
 
   #footer .footer-top .social-links a {
     font-size: 18px;
     display: inline-block;
-    background: #eb5d1e;
+    background: #3b57f5;
     color: #fff;
     line-height: 1;
     padding: 8px 0;
@@ -1134,7 +1135,7 @@ body{
   }
 
   #footer .footer-top .social-links a:hover {
-    background: #ef7f4d;
+    background: #ec9461;
     color: #fff;
     text-decoration: none;
   }
@@ -1197,4 +1198,10 @@ body{
   }
   .chat-bg{
     background-color:#0054B0;
+  }
+  .navbar{
+    height: 12vh;
+  }
+  .main-heading{
+    font-family: 'Merienda', cursive;
   }
