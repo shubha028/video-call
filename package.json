@@ -1,7 +1,7 @@
 {
   "name": "livestream-server",
   "version": "0.0.1",
-  "description": "A video call  web application implementation using WebRTC, Socket.io and Node.js.",
+  "description": "A conference call implementation using WebRTC, Socket.io and Node.js.",
   "main": "src/app.js",
   "dependencies": {
     "express": "^4.17.1",
@@ -9,23 +9,19 @@
     "react-google-login": "^5.2.2",
     "socket.io": "^2.3.0"
   },
-  "devDependencies": {
-    "nodemon": "^2.0.2"
-  },
   "scripts": {
-    "start": "node ./src/app.js",
+    "start":"node ./src/app.js",
     "watch": "nodemon --watch \"src/\" --exec \"node src/app.js\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shubha028/video-call.git"
+    "url": "git+https://github.com/amirsanni/livestream-server.git"
   },
   "keywords": [
     "LiveStream",
     "Server"
   ],
   "author": "shubha sharma",
-  "license": "ISC",
-  "homepage": ""
+  "license": "ISC"
 }
