@@ -230,3 +230,7 @@ input {
   height: 40px;
   width: 40px;
 }
+#navicons{
+  flex: 1;
+  float: right;
+}

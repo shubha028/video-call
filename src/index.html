@@ -21,8 +21,13 @@
 
         <nav class="navbar fixed-top backcolor rounded-0 d-print-none">
             <div class="text-white">MS Teams Clone</div>
+            <div id="navicons">
             <a  class="text-white"  id="login" href="http://localhost:3000/login"><i class="fas fa-user"></i>Your Account!</a>
 
+              <input type="checkbox" id="theme-toggle">
+              <label for="theme-toggle"></label>
+
+            </div>
             <div class="pull-right room-comm" hidden>
                 <button class="btn btn-sm rounded-0 btn-no-effect" autoplay="true" id='toggle-video'>
                     <i class="fa fa-video text-white"></i>
@@ -45,10 +50,10 @@
                 </button>
             </div>
         </nav>
-
+        <br></br><br></br>
 
         <div class="container-fluid" id='room-create' hidden>
-            <section id="hero" class="d-flex align-items-center">
+
 
                 <div class="container">
                   <div class="row gy-4">
@@ -65,11 +70,10 @@
                   </div>
                 </div>
 
-              </section><!-- End Hero -->
 
-
+                <br></br><br></br>
                 <!-- ======= Services Section ======= -->
-                <section id="services" class="services section-bg">
+
                   <div class="container" data-aos="fade-up">
 
                     <div class="section-title">
@@ -113,10 +117,11 @@
                     </div>
 
                   </div>
-                </section>
+
 
                     <div class="row" id="meeting">
                 <div class="col-12 h2 mt-5 text-center">Join Meeting</div>
+
             </div>
 
             <div class="row mt-2">
@@ -138,8 +143,7 @@
                 <div class="col-12 col-md-4 offset-md-4 mb-3" id='room-created'></div>
             </div>
             <!-- ======= Footer ======= -->
- <footer id="footer">
-
+<br></br>
 
   <div class="footer-top">
     <div class="container">
@@ -193,7 +197,7 @@
     </div>
   </div>
 
-</footer><!-- End Footer -->
+
         </div>
 
 
@@ -247,21 +251,11 @@
             </div>
         </div>
     </body>
-    <script>
-
-   const toggle = document.getElementById('toggle');
-const body = document.body;
-
-toggle.addEventListener('input', (e) => {
-  const isChecked = e.target.checked;
-
-  if(isChecked) {
-    body.classList.add('dark-theme');
-  } else {
-    body.classList.remove('dark-theme');
-  }
-});
-    </script>
+<script>
+document.getElementById('theme-toggle').addEventListener('click', (e) => {
+  const checked = e.target.checked;
+  document.body.setAttribute('theme', checked ? 'dark' : 'light');
+});</script>
 <script type="text/javascript">
   var config = {
     apiKey: "AIzaSyBFPl6yV7qOrEQvT0YAAbMYRkmsVsWRikI",
