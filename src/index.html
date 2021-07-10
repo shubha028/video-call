@@ -12,44 +12,89 @@
         <script src='/socket.io/socket.io.js'></script>
         <script type="module" src='assets/js/rtc.js'></script>
         <script type="module" src='assets/js/events.js'></script>
-
         <script src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/7.3.0/adapter.min.js" integrity="sha256-2qQheewaqnZlXJ3RJRghVUwD/3fD9HNqxh4C+zvgmF4=" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js'></script>
+        <script src='https://cdn.rawgit.com/yahoo/xss-filters/master/dist/xss-filters.js'></script>
+        <script src='assets/js/autolink.js'></script>
     </head>
 
     <body>
+        <div class="custom-modal" id='recording-options-modal'>
+            <div class="custom-modal-content">
+                <div class="row text-center">
+                    <div class="col-md-6 mb-2">
+                        <span class="record-option" id='record-video'>Record video</span>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <span class="record-option" id='record-screen'>Record screen</span>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-md-12 text-center">
+                        <button class="btn btn-outline-danger" id='closeModal'>Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
         <nav class="navbar fixed-top backcolor rounded-0 d-print-none">
-            <div class="text-white">MS Teams Clone</div>
+            <a class="text-white" href="http://localhost:3000/">Video Call</div>
             <div id="navicons">
-            <a  class="text-white"  id="login" href="http://localhost:3000/login"><i class="fas fa-user"></i>Your Account!</a>
+                <a  class="text-white"  id="login" href="http://localhost:3000/login"><i class="fas fa-user"></i>Your Account!</a>
 
-              <input type="checkbox" id="theme-toggle">
-              <label for="theme-toggle"></label>
+                  <input type="checkbox" id="theme-toggle">
+                  <label for="theme-toggle"></label>
 
-            </div>
+                </div>
             <div class="pull-right room-comm" hidden>
-                <button class="btn btn-sm rounded-0 btn-no-effect" autoplay="true" id='toggle-video'>
+              <label class="dropdown" onclick="getURL()">
+
+                <div class="dd-button">
+                  Invite link
+                </div>
+
+                <input type="checkbox" class="dd-input copy-text" id="test">
+
+                <ul class="dd-menu">
+                <li><article id="content-copy">
+                  Copy this.
+              </article>
+            </li>
+              <button id="btn-copy"><i class="fa fa-clone"></i></button>
+<p>copy the link & share with your freinds!!</p>
+                </ul>
+
+              </label>
+
+              <button class="btn btn-sm rounded-0 btn-no-effect" id='toggle-video' title="Hide Video">
                     <i class="fa fa-video text-white"></i>
                 </button>
 
-                <button class="btn btn-sm rounded-0 btn-no-effect"  autoplay="true" id='toggle-mute'>
-                    <i class="fa fa-volume-up text-white"></i>
+                <button class="btn btn-sm rounded-0 btn-no-effect" id='toggle-mute' title="Mute">
+                    <i class="fa fa-microphone-alt text-white"></i>
                 </button>
 
-                <button class="btn btn-sm text-white pull-right d-md-none btn-no-effect" id='toggle-chat-pane'>
+                <button class="btn btn-sm rounded-0 btn-no-effect" id='share-screen' title="Share screen">
+                    <i class="fa fa-desktop text-white"></i>
+                </button>
+
+                <button class="btn btn-sm rounded-0 btn-no-effect" id='record' title="Record">
+                    <i class="fa fa-dot-circle text-white"></i>
+                </button>
+
+                <button class="btn btn-sm text-white pull-right btn-no-effect" id='toggle-chat-pane'>
                     <i class="fa fa-comment"></i> <span class="badge badge-danger very-small font-weight-lighter" id='new-chat-notification' hidden>New</span>
                 </button>
 
-                  <button class="view-button" id="share-button"><i id="share-button-icon" class="fas fa-eye"></i></button>
-                  <button class="view-button" style="display: none" id="stop-share-button"><i id="stop-share-button-icon" class="fas fa-eye-slash"></i></button>
-
-
                 <button class="btn btn-sm rounded-0 btn-no-effect text-white">
-                    <a href="/" class="text-white text-decoration-none">Leave Room</a>
+                    <a href="/" class="text-white text-decoration-none"><i class="fa fa-sign-out-alt text-white" title="Leave"></i></a>
                 </button>
             </div>
         </nav>
+
         <br></br><br></br>
 
         <div class="container-fluid" id='room-create' hidden>
@@ -61,6 +106,7 @@
                       <h1 class="main-heading">Bettter digital experience with MS Teams Clone</h1>
                       <h2>We are medium  to your connections.</h2>
                       <div>
+
                         <a href="#meeting" class="btn-get-started scrollto">Get Started</a>
                       </div>
                     </div>
@@ -200,56 +246,85 @@
 
         </div>
 
+        <div class="container-fluid" id='room-create' hidden>
+          <div class="row">
+              <div class="col-12 h2 mt-5 text-center">Create Room</div>
+          </div>
+
+          <div class="row mt-2">
+              <div class="col-12 text-center">
+                  <span class="form-text small text-danger" id='err-msg'></span>
+              </div>
+
+              <div class="col-12 col-md-4 offset-md-4 mb-3">
+                  <label for="room-name">Room Name</label>
+                  <input type="text" id='room-name' class="form-control rounded-0" placeholder="Room Name">
+              </div>
+
+              <div class="col-12 col-md-4 offset-md-4 mb-3">
+                  <label for="your-name">Your Name</label>
+                  <input type="text" id='your-name' class="form-control rounded-0" placeholder="Your Name">
+              </div>
+
+              <div class="col-12 col-md-4 offset-md-4 mb-3">
+                  <button id='create-room' class="btn btn-block rounded-0 backcolor">Create Room</button>
+              </div>
+
+              <div class="col-12 col-md-4 offset-md-4 mb-3" id='room-created'></div>
+          </div>
+      </div>
 
 
 
+      <div class="container-fluid" id='username-set' hidden>
+          <div class="row">
+              <div class="col-12 h4 mt-5 text-center">Your Name</div>
+          </div>
 
-        <div class="container-fluid" id='username-set' hidden>
-            <div class="row">
-                <div class="col-12 h4 mt-5 text-center">Your Name</div>
-            </div>
+          <div class="row mt-2">
+              <div class="col-12 text-center">
+                  <span class="form-text small text-danger" id='err-msg-username'></span>
+              </div>
 
-            <div class="row mt-2">
-                <div class="col-12 text-center">
-                    <span class="form-text small text-danger" id='err-msg-username'></span>
-                </div>
+              <div class="col-12 col-md-4 offset-md-4 mb-3">
+                  <label for="username">Your Name</label>
+                  <input type="text" id='username' class="form-control rounded-0" placeholder="Your Name">
+              </div>
 
-                <div class="col-12 col-md-4 offset-md-4 mb-3">
-                    <label for="username">Your Name</label>
-                    <input type="text" id='username' class="form-control rounded-0" placeholder="Your Name">
-                </div>
-
-                <div class="col-12 col-md-4 offset-md-4 mb-3">
-                    <button id='enter-room' class="btn btn-block rounded-0 chat-bg">Enter Room</button>
-                </div>
-            </div>
-        </div>
-
+              <div class="col-12 col-md-4 offset-md-4 mb-3">
+                  <button id='enter-room' class="btn btn-block rounded-0 backcolor">Enter Room</button>
+              </div>
+          </div>
+      </div>
 
 
-        <div class="container-fluid room-comm" hidden>
-            <div class="row">
-                <video class="local-video" id='local' volume='0' autoplay muted></video>
-            </div>
 
-            <div class="row">
-                <div class="col-md-9 mt-3 mb-3 main">
-                    <div class="row" id='videos'></div>
-                </div>
+      <div class="container-fluid room-comm" hidden>
 
-                <div class="col-md-3 chat-col d-print-none mb-2 chat-bg" id='chat-pane'>
-                    <div class="row">
-                        <div class="col-12 text-center h2 mb-3 mt-2">CHAT</div>
-                    </div>
+          <div class="row">
+              <video class="local-video mirror-mode" id='local' volume='0' autoplay muted></video>
+          </div>
 
-                    <div id='chat-messages'>
-                      <div class="row">
-                        <textarea id='chat-input' class="form-control rounded-0 chat-box border-info" rows='3' placeholder="Type here..."></textarea>
+          <div class="row">
+              <div class="col-md-12 main" id='main-section'>
+                  <div class="row mt-2 mb-2" id='videos'></div>
 
-                      </div>
-                </div>
-            </div>
-        </div>
+              </div>
+
+              <div class="col-md-3 chat-col d-print-none mb-2 backcolor" id='chat-pane' hidden>
+                  <div class="row">
+                      <div class="col-12 text-center h2 mb-3">CHAT</div>
+                  </div>
+
+                  <div id='chat-messages'></div>
+
+                  <div class="row">
+                      <textarea id='chat-input' class="form-control rounded-0 chat-box border-info" rows='3' placeholder="Type here..."></textarea>
+                  </div>
+              </div>
+          </div>
+      </div>
+
     </body>
 <script>
 document.getElementById('theme-toggle').addEventListener('click', (e) => {
@@ -304,7 +379,7 @@ window.location.href="http://localhost:3000/";
 //Take user to a different or home page
 }
 //is signed in
-
+document.getElementById("login").innerHTML="logout";
 }else{
 
 alert("No Active User");
@@ -315,8 +390,58 @@ alert("No Active User");
 
 });
    }
+   function getURL() {
+       document.getElementById("content-copy").innerHTML= window.location.href;
+    }
+
+    </script>
+<script>
+   const copyButton = document.getElementById("btn-copy");
+            const pasteButton = document.getElementById("btn-paste");
+
+            const pasteArticle = document.getElementById('content-paste');
 
 
+            // execCommand -- deprecated
+            // use clipboard api moving forward
+            copyButton.addEventListener("click", async function (event) {
+                const content = document.getElementById('content-copy').textContent;
+                await navigator.clipboard.writeText(content);
+                console.log(await navigator.clipboard.readText());
+            });
+
+            pasteButton.addEventListener('click', async function (event){
+                // clear paste article
+                pasteArticle.textContent = '';
+                try{
+                    // this will return an array of clipboard item
+                    const data = await navigator.clipboard.read();
+
+                    // check if img
+                    const clipboardContent = data[0];
+
+                    console.log(clipboardContent);
+
+                    // blob is a data format that represent a large binary file
+                    // eg pdf, img and etc
+                    const blob = await clipboardContent.getType('image/png');
+                    // retrieve the blob url so we can pass into image element
+                    const blobUri = window.URL.createObjectURL(blob);
+                    const img = document.createElement('img');
+                    img.src = blobUri;
+                    pasteArticle.appendChild(img);
+                }catch(err){
+                    console.log(err);
+                    // if there is an error, that means there is no image
+                    const text = await navigator.clipboard.readText();
+                    pasteArticle.textContent = text;
+                }
+
+
+
+            });
 
 </script>
+
+
 </html>
