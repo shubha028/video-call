@@ -16,3 +16,9 @@ A video call and chat implementation using WebRTC, Socket.io and Node.js.
 -picture-in-picture for video<br />
 -full screen remote video<br />
 -Multi-participants
+
+
+# Getting Started
+- Run `npm i`
+- `cd .\src\`
+- `node ./app.js`
