@@ -15,3 +15,4 @@ A video call and chat implementation using WebRTC, Socket.io and Node.js.
 -login/sign-up<br />
 -picture-in-picture for video<br />
 -full screen remote video<br />
+-Multi-participants
