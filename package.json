@@ -5,6 +5,8 @@
   "main": "src/app.js",
   "dependencies": {
     "express": "^4.17.1",
+    "firebase": "^8.7.1",
+    "react-firebaseui": "^5.0.2",
     "serve-favicon": "^2.5.0",
     "socket.io": "^2.4.0"
   },
@@ -12,6 +14,7 @@
     "nodemon": "^2.0.6"
   },
   "scripts": {
+    "start": "node ./src/app.js",
     "watch": "nodemon --watch \"src/\" --exec \"node src/app.js\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -23,12 +26,6 @@
     "LiveStream",
     "Server"
   ],
-
-  "bugs": {
-    "url": "https://github.com/shubha028/video-call"
-  },
-  "homepage": "https://github.com/shubha028/video-call",
-
   "author": "shubha sharma",
   "license": "ISC"
 }

@@ -17,6 +17,9 @@ app.get('/', (req, res)=>{
 app.get('/login', (req, res)=>{
     res.sendFile(__dirname+'/hi.html');
 });
+app.get('/todo', (req, res)=>{
+    res.sendFile(__dirname+'/todo.html');
+});
 
 io.of('/stream').on('connection', stream);
 const PORT = process.env.PORT || 3000;

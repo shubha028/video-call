@@ -1,6 +1,7 @@
 <html>
 <head>
   <title>Login Page</title>
+<!--link to all files linked to this page-->
   <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
   <link rel="stylesheet" href="./assets/css/loginpage.css" />
   <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
@@ -8,16 +9,16 @@
 <script src="./assets/js/login.js"></script>
 </head>
 <body>
-
+<div id ="design">
   <div id="login_div" class="main-div">
-    <h3>Login to MS Teams clone</h3>
+    <h3>LOGIN TO MS TEAMS CLONE</h3>
     <input type="email" placeholder="Email..." id="email" value=" " />
     <input type="password" placeholder="Password..." id="password" value=" " />
 <button onclick="signUp()" id="signup">signup</button>
 <button onclick="signIn()" id="signin">signin</button>
     <button onclick="signOut()" id="login">signout</button>
   </div>
-
+</div>
 
 
 </body>
@@ -33,7 +34,6 @@
     firebase.initializeApp(config);
 
     const auth = firebase.auth();
-
 
     function signUp(){
 
