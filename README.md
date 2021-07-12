@@ -8,7 +8,7 @@ MS Teams Clone is a  video call and chat web application built with webRTC, Node
 
 # Tech-Stack
 <ul>
-  <li>Nodejs</li> <li>socket.io</li>  <li>webRTC</li>
+<li>Html</li>  <li>Css</li>  <li>Bootstrap</li>  <li>Reactjs</li>  <li>Nodejs</li> <li>socket.io</li>  <li>webRTC</li>
   </ul>
 
 
@@ -65,7 +65,7 @@ Project Link: [https://github.com/shubha028/video-call](https://github.com/shubh
 
 
 ## Video demo
-yt link attach
+https://youtu.be/ycUu_iwraKU
   
 ## Screenshot of working application
 <img width="947" alt="readme1" src="https://user-images.githubusercontent.com/56934420/125278865-de278780-e330-11eb-82de-e2f29f86ba5d.PNG">
