@@ -59,7 +59,7 @@ To get a local copy up and running follow these simple example steps.
 <!-- CONTACT -->
 ## Contact
 
-Shubha Sharma - [https://twitter.com/shubha0208](https://twitter.com/shubha0208) - shubhasharma0208@gmail.com
+Shubha Sharma - shubhasharma0208@gmail.com
 
 Project Link: [https://github.com/shubha028/video-call](https://github.com/shubha028/video-call)
 
