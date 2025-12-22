@@ -3,6 +3,7 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
+This project was build as part of Microsoft Enagage Program.
 MS Teams Clone is a  video call and chat web application built with webRTC, Nodejs and socket.io
 
 
